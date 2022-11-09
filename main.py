@@ -52,7 +52,10 @@ def add_user():
 				# cur.execute("select * from inventory")
 				# print(cur.fetchall())
 				# insert_query = "insert into inventory (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published)"
-				cur.execute("INSERT INTO inventory (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published))
+				cur.execute("update inventory set varient_type = %s, varient_id = %s, sku = %s, varient_name = %s, price_amount = %s, cost_price_amount = %s, quantity = %s, quantity_allocated = %s, is_published = %s where varient_id = %s", (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published, varient_id))
+            			cur.execute("insert into inventory (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published) select %s, %s, %s, %s, %s, %s, %s, %s, %s where not exists (select 1 from inventory where varient_id = %s)", (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published, varient_id))
+	
+# 				#cur.execute("INSERT INTO inventory (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (varient_type, varient_id, sku, varient_name, price_amount, cost_price_amount, quantity, quantity_allocated, is_published))
 				# cur.execute(insert_query)
 				conn.commit()
 				# cur.execute("select * from product")
